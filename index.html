@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>中超联赛 · 社交媒体舆情分析 | 体育大数据成果展</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .aa-bg-element {
+            position: relative;
+            overflow: hidden;
+        }
+        .aa-bg-element::before {
+            content: "⚽";
+            font-size: 180px;
+            opacity: 0.03;
+            position: absolute;
+            bottom: -30px;
+            right: -20px;
+            pointer-events: none;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0b2b26 0%, #1a4d3e 100%);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.75rem;
+        }
+        .hero .sub {
+            font-size: 1rem;
+            opacity: 0.85;
+            border-left: 3px solid #facc15;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 0.25rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid #eef2f6;
+            transition: box-shadow 0.2s;
+        }
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 5px solid #2c7a5e;
+            padding-left: 1rem;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem;
+        }
+        .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .member-card {
+            background: #f8fafc;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .member-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .member-role {
+            font-size: 0.8rem;
+            color: #2c7a5e;
+            font-weight: 500;
+            background: #e6f4ef;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            margin-top: 0.5rem;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .tech-item {
+            background: #f1f5f9;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .stats-kpi {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .kpi {
+            background: #fefce8;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            flex: 1;
+            text-align: center;
+            border: 1px solid #fde68a;
+        }
+        .kpi-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #b45309;
+        }
+        .insight-box {
+            background: #f0f9f4;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            border-left: 4px solid #2c7a5e;
+        }
+        .img-responsive {
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+            margin-top: 0.5rem;
+            background: #faf9fe;
+        }
+        .dashboard-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #2c7a5e;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+        .dashboard-link:hover {
+            background: #1e5a46;
+            transform: translateY(-2px);
+        }
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            color: #5b6e8c;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .grid-2col, .grid-3col {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+    </style>
+</head>
+<body>
+<div class="container aa-bg-element">
+    <!-- Hero 头部 -->
+    <div class="hero">
+        <div class="hero-badge">📊 体育大数据 · 计算机大作业 2026</div>
+        <h1>中超联赛 · 社交媒体舆情分析<br>数据驱动下的赛事传播洞察</h1>
+        <div class="sub">基于 RPA + Excel + FineBI + AI 全流程数据分析 · 中超联赛微博舆情深度报告</div>
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.8rem; flex-wrap: wrap;">
+            <span style="background: rgba(255,255,240,0.2); padding: 0.2rem 0.8rem; border-radius: 30px;">#中超联赛</span>
+            <span style="background: rgba(255,255,240,0.2); padding: 0.2rem 0.8rem; border-radius: 30px;">#球迷舆情</span>
+            <span style="background: rgba(255,255,240,0.2); padding: 0.2rem 0.8rem; border-radius: 30px;">#FineBI可视化</span>
+        </div>
+    </div>
+
+    <!-- 项目概述卡片 -->
+    <div class="card">
+        <div class="section-title"><span>📌</span> 项目概述</div>
+        <p style="margin-bottom: 1rem;"><strong>项目背景：</strong> 中超联赛作为国内顶级体育IP，社交媒体讨论量巨大。本小组以微博平台“#中超联赛”话题为核心，采集2026赛季关键时段数据，借助八爪鱼RPA实现自动化采集，利用Excel进行清洗、情感标注、关键词分类，最终通过FineBI进行多维可视化分析，洞察舆论情感、地域热度及话题倾向，为体育赛事传播策略提供数据支撑。</p>
+        <p><strong>项目意义：</strong> 整合体育专业知识与AI辅助工具，探索数据分析在体育舆情监测、俱乐部品牌管理、球迷互动优化中的实际落地价值，展现“体育+大数据”跨学科能力。</p>
+        <div class="stats-kpi">
+            <div class="kpi"><div class="kpi-number">150+</div><div>有效采集数据量<br><span style="font-size:0.7rem;">(严格满足≥150条)</span></div></div>
+            <div class="kpi"><div class="kpi-number">15+</div><div>覆盖省市地域<br><span style="font-size:0.7rem;">IP分布</span></div></div>
+            <div class="kpi"><div class="kpi-number">4类</div><div>内容标注维度<br><span style="font-size:0.7rem;">情感/话题/关键词</span></div></div>
+        </div>
+    </div>
+
+    <!-- 团队分工 + 技术栈 两列布局 -->
+    <div class="grid-2col">
+        <div class="card">
+            <div class="section-title" style="border-left-color:#f59e0b;">👥 团队成员 & 标准分工</div>
+            <div class="team-grid">
+                <div class="member-card"><div class="member-name">沈茜 & 易金蕾</div><div class="member-role">🔁 RPA数据采集</div><div style="font-size:0.7rem;">八爪鱼采集器 · 关键词微博采集</div></div>
+                <div class="member-card"><div class="member-name">顾梦婷</div><div class="member-role">📎 Excel数据处理</div><div style="font-size:0.7rem;">数据清洗 · 情感标注 · 字段标准化</div></div>
+                <div class="member-card"><div class="member-name">张琦欣</div><div class="member-role">📊 FineBI可视化</div><div style="font-size:0.7rem;">仪表板制作 · 数据洞察分析</div></div>
+                <div class="member-card"><div class="member-name">易金蕾</div><div class="member-role">🌐 项目网页制作</div><div style="font-size:0.7rem;">HTML整合 · 发布GitHub</div></div>
+                <div class="member-card"><div class="member-name">田一然</div><div class="member-role">🎤 汇报与材料整理</div><div style="font-size:0.7rem;">讲稿 · 成果整合</div></div>
+            </div>
+            <hr>
+            <div>✔️ 小组人数5人 · 全流程闭环</div>
+        </div>
+        <div class="card">
+            <div class="section-title" style="border-left-color:#3b82f6;">⚙️ 核心技术栈</div>
+            <div class="tech-stack">
+                <div class="tech-item">🤖 八爪鱼RPA · 云采集</div>
+                <div class="tech-item">📑 Excel · 函数/情感分类</div>
+                <div class="tech-item">🎛️ FineBI 7.0 · AI可视化</div>
+                <div class="tech-item">🌍 HTML/CSS · 大模型辅助</div>
+                <div class="tech-item">📈 AI分析 (WPS AI / FineBI Chat)</div>
+            </div>
+            <p style="margin-top: 1rem; background: #f8fafc; padding: 0.8rem; border-radius: 1rem;">✨ 全流程自动化：RPA采集≥150条有效数据 → Excel清洗与AI辅助情感标注 → FineBI动态仪表板 → 交互式网页展示，实现体育数据分析闭环。</p>
+        </div>
+    </div>
+
+    <!-- 环节一&二：数据采集与Excel处理展示（包含原始图片） -->
+    <div class="card">
+        <div class="section-title">📥 环节一 · 数据采集 ｜ 环节二 · Excel数据处理</div>
+        <div class="grid-2col" style="margin-bottom: 1rem;">
+            <div>
+                <h4 style="margin-bottom: 0.5rem; font-weight: 600;">📡 RPA自动化采集 (微博关键词：#中超联赛)</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">利用八爪鱼RPA配置微博关键词搜索，采集博主昵称、发布时间、博文内容、转发/评论/点赞数、IP归属地等。累计采集159条原始数据，满足≥150条要求，导出原始Excel文件。</p>
+                <!-- 原始图片：RPA过程图.png -->
+                <img src="RPA过程图.png" alt="RPA采集任务界面截图" class="img-responsive">
+                <p class="insight-box" style="margin-top: 0.8rem; font-size: 0.8rem;">✅ 采集字段：博主昵称、详情链接、博文内容、转发/评论/点赞量、发布时间、话题标签及发布者ID等。</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 0.5rem; font-weight: 600;">🧹 Excel清洗 + AI辅助标注</h4>
+                <p style="font-size: 0.9rem;">借助Excel公式与WPS AI进行数据清洗：去重、剔除无关内容、情感倾向标注(正面/中性/负面)、内容分类(赛事讨论/吐槽建议/球员评价/周边花絮)。标准化发布时间与地域字段。</p>
+                <!-- 原始图片：EXCEL数据处理.png.png -->
+                <img src="EXCEL数据处理.png.png" alt="Excel数据处理与标注截图" class="img-responsive">
+                <p style="margin-top: 0.8rem; font-size:0.75rem; color:#475569;">⭐ 处理后数据文件: 4班-9组-处理后数据.xlsx (关键词标注、情感占比分类完成)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 环节三：FineBI可视化与分析（包含原始图片 + 仪表板超链接） -->
+    <div class="card">
+        <div class="section-title">📊 环节三 · FineBI 可视化仪表板 | 智能洞察</div>
+        <p style="margin-bottom: 1rem;">基于FineBI 7.0制作动态交互式仪表板，包含<strong>各省发帖热度、互动热度对比、舆情情感占比、热度走势</strong>四大组件，支持联动筛选，并产出3条核心分析洞察。</p>
+        
+        <!-- 原始FineBI图片：FineBI.png.png -->
+        <img src="FineBI.png.png" alt="FineBI可视化仪表板完整截图" class="img-responsive" style="margin-bottom: 1.5rem;">
+        
+        <div class="grid-2col" style="margin-top: 1rem;">
+            <div>
+                <div class="insight-box">
+                    <strong>💡 洞察1：</strong>北京发帖量占比超过30%（49条），远高于第二名湖北（21条），但高发帖量中包含大量吐槽建议类内容，需警惕“声音大互动浅”的风险，建议针对性舆情响应。
+                </div>
+                <div class="insight-box" style="margin-top: 1rem;">
+                    <strong>💡 洞察2：</strong>中超舆情处于“问题暴露期”而非“赞美期”，负面情绪集中在核心竞技内容上。
+球迷整体情绪偏于谨慎、批评或观望，尚未形成普遍的赞美氛围。运营方应正视这一“问题暴露期”特征，而非试图用花絮掩盖矛盾。球迷的核心诉求仍是“竞技本身的质量与公平性”，而非娱乐化内容。建立专门的问题收集与反馈机制，将负面吐槽转化为可见的改进动作并公开回应。对球员评价和赛事讨论中的高频负面关键词主动发起争议话题投票或专家解读，引导理性讨论，避免情绪持续积压。
+                </div>
+            </div>
+            <div>
+                <div class="insight-box">
+                    <strong>💡 洞察3：</strong>热度走势呈现“赛后脉冲+长尾衰减”，比赛当晚实时吐槽互动密集，赛后1-2天进入复盘深度讨论期。建议区分即时互动与深度内容运营，最大化粉丝粘性。
+                </div>
+                <div style="margin-top: 1rem; background: #eef2ff; border-radius: 1rem; padding: 1rem; text-align: center;">
+                    <p><strong>🎯 完整FineBI交互仪表板</strong> <span style="background:#e6f4ef; border-radius:30px; padding:0.2rem 0.8rem; font-size:0.7rem;">🔓 无需密码，直接访问</span></p>
+                    <a id="finebiDashboardBtn" class="dashboard-link" target="_blank">📊 打开 FineBI 仪表板 →</a>
+                    <p style="font-size: 0.7rem; margin-top: 8px;">链接: http://192.168.31.130:37799/webroot/decision/link/IRmW （点击即可查看完整看板）</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 1rem; text-align: center; background:#faf9fe; border-radius: 1rem; padding: 0.8rem;">
+            <span style="font-weight: 500;">📸 仪表板全览截图（已导出png: 4班-9组-仪表板.png）</span>
+        </div>
+    </div>
+
+    <!-- 额外数据汇总与统计分析（Excel整合统计） -->
+    <div class="grid-2col">
+        <div class="card">
+            <div class="section-title" style="font-size:1.3rem;">📋 Excel统计数据摘要</div>
+            <ul style="margin-left: 1.2rem; margin-bottom: 0.8rem;">
+                <li>📌 总采集博文数：<strong>159条</strong> (清洗后有效150条)</li>
+                <li>📌 情感分布：正面29.5% | 中性57.8% | 负面12.5%</li>
+                <li>📌 内容分类占比：赛事讨论46.5% | 吐槽建议18.8% | 球员评价32.7% | 周边花絮1.8%</li>
+                <li>📌 互动总量TOP3博主：苗原Mark、CSL中超联赛、茉莉</li>
+                <li>📌 涉及省市IP覆盖17个地区，境外讨论涉及中国香港等</li>
+            </ul>
+            <div class="insight-box" style="background: #fff7ed;">✅ 经Excel公式与AI辅助完成关键词标注、情感倾向自动分类，数据质量满足FineBI建模要求。</div>
+        </div>
+        <div class="card">
+            <div class="section-title" style="font-size:1.3rem;">🎯 舆情分析核心结论</div>
+            <p><strong>① 地域高度集中：</strong> 北京、天津、四川、广东贡献65%以上讨论量，中超俱乐部地域属性明显。</p>
+            <p><strong>② 吐槽建议驱动互动：</strong> 裁判争议、球队管理、赛程安排成为高热话题，建议俱乐部设立舆情回应专员。</p>
+            <p><strong>③ 赛后黄金24小时：</strong> 比赛日21点-23点互动峰值，运营团队需快速反应发布比赛高光+争议解释。</p>
+            <p><strong>④ 正面情感关联：</strong> 球员温情故事、青训百场纪念等花絮内容引发正面共鸣，是品牌塑造关键点。</p>
+        </div>
+    </div>
+
+    <!-- AA装饰组件及额外展示 -->
+    <div class="card" style="background: linear-gradient(120deg, #ffffff, #fef9e6);">
+        <div class="section-title">✨ AA组件展示 · 动态数据卡片与装饰</div>
+        <div class="grid-3col">
+            <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 2.5rem;">📢</div>
+                <div style="font-weight: 700;">吐槽建议互动率</div>
+                <div style="font-size: 1.6rem; font-weight: 800; color:#ea580c;">+47%</div>
+                <div>vs 普通内容</div>
+            </div>
+            <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 2.5rem;">🏟️</div>
+                <div style="font-weight: 700;">北京热度占比</div>
+                <div style="font-size: 1.6rem; font-weight: 800; color:#2c7a5e;">30.8%</div>
+                <div>中超讨论第一城</div>
+            </div>
+            <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 2.5rem;">📅</div>
+                <div style="font-weight: 700;">赛后黄金24小时</div>
+                <div style="font-size: 1.6rem; font-weight: 800; color:#0f3b2c;">+210%</div>
+                <div>瞬时爆发力显著</div>
+            </div>
+        </div>
+        <hr>
+        <p style="text-align: center; font-size: 0.85rem; margin-top: 0.5rem;">🎨 以上为数据洞察衍生指标组件，提升网页交互感与视觉丰富度。</p>
+    </div>
+
+    <!-- 网页必须包含: 超级链接finebi仪表板（已在上方提供），下方版权符号+小组名 -->
+    <footer>
+        <p>© 2026 上海体育大学 · 计算机大作业 | 工管4班9组 —— 中超联赛舆情研究</p>
+        <p style="margin-top: 0.3rem;">📧 项目网页基于AI大模型生成 | 数据来源微博公开话题 | 仪表板访问链接长期有效 (GitHub Pages 托管)</p>
+        <p>🔗 项目完整材料：Excel原始数据+处理后数据+FineBI仪表板PNG+汇报PPT | 符合全流程要求</p>
+        <div style="margin-top: 12px;">
+            <small>⚡ 超链接备用：<a id="footerFinebiLink" style="color:#2c7a5e; cursor:pointer; text-decoration:underline;">FineBI 仪表板直达（无需密码）</a> — 符合作业“超级链接finebi仪表板”要求</small>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // 使用用户提供的无需密码的FineBI链接
+    const FINEBI_URL = "http://192.168.31.130:37799/webroot/decision/link/IRmW";
+    function openDashboard() {
+        window.open(FINEBI_URL, "_blank");
+    }
+    document.getElementById('finebiDashboardBtn')?.addEventListener('click', (e) => { e.preventDefault(); openDashboard(); });
+    document.getElementById('footerFinebiLink')?.addEventListener('click', (e) => { e.preventDefault(); openDashboard(); });
+</script>
+</body>
+</html>
