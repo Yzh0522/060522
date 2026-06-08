@@ -284,7 +284,7 @@
         </div>
     </div>
 
-    <!-- 环节三：FineBI可视化与分析（包含原始图片 + 仪表板超链接） -->
+    <!-- 环节三：FineBI可视化与分析（包含原始图片 + PDF报告链接） -->
     <div class="card">
         <div class="section-title">📊 环节三 · FineBI 可视化仪表板 | 智能洞察</div>
         <p style="margin-bottom: 1rem;">基于FineBI 7.0制作动态交互式仪表板，包含<strong>各省发帖热度、互动热度对比、舆情情感占比、热度走势</strong>四大组件，支持联动筛选，并产出3条核心分析洞察。</p>
@@ -304,12 +304,12 @@
             </div>
             <div>
                 <div class="insight-box">
-                    <strong>💡 洞察3：</strong>热度走势呈现“赛后脉冲+长尾衰减”，比赛当晚实时吐槽互动密集，赛后1-2天进入复盘深度讨论期。建议区分即时互动与深度内容运营，最大化粉丝粘性。
+                    <strong>💡 洞察3：</strong>热度走势呈现“赛日脉冲+赛后长尾衰减”，需区分即时互动与深度复盘两类运营策略。比赛当晚实时吐槽互动密集，赛后1-2天进入复盘深度讨论期。建议区分即时互动与深度内容运营，最大化粉丝粘性。
                 </div>
                 <div style="margin-top: 1rem; background: #eef2ff; border-radius: 1rem; padding: 1rem; text-align: center;">
-                    <p><strong>🎯 完整FineBI交互仪表板</strong> <span style="background:#e6f4ef; border-radius:30px; padding:0.2rem 0.8rem; font-size:0.7rem;">🔓 无需密码，直接访问</span></p>
-                    <a id="finebiDashboardBtn" class="dashboard-link" target="_blank">📊 打开 FineBI 仪表板 →</a>
-                    <p style="font-size: 0.7rem; margin-top: 8px;">链接: http://192.168.31.130:37799/webroot/decision/link/IRmW （点击即可查看完整看板）</p>
+                    <p><strong>📄 完整仪表板报告（PDF）</strong> <span style="background:#e6f4ef; border-radius:30px; padding:0.2rem 0.8rem; font-size:0.7rem;">🔓 直接查看</span></p>
+                    <a id="pdfReportBtn" class="dashboard-link" target="_blank">📑 查看仪表板报告 PDF →</a>
+                    <p style="font-size: 0.7rem; margin-top: 8px;">点击按钮即可在线阅读或下载报告（包含所有可视化图表与洞察结论）</p>
                 </div>
             </div>
         </div>
@@ -367,25 +367,33 @@
         <p style="text-align: center; font-size: 0.85rem; margin-top: 0.5rem;">🎨 以上为数据洞察衍生指标组件，提升网页交互感与视觉丰富度。</p>
     </div>
 
-    <!-- 网页必须包含: 超级链接finebi仪表板（已在上方提供），下方版权符号+小组名 -->
+    <!-- 网页必须包含: 超链接指向PDF报告，下方版权符号+小组名 -->
     <footer>
         <p>© 2026 上海体育大学 · 计算机大作业 | 工管4班9组 —— 中超联赛舆情研究</p>
-        <p style="margin-top: 0.3rem;">📧 项目网页基于AI大模型生成 | 数据来源微博公开话题 | 仪表板访问链接长期有效 (GitHub Pages 托管)</p>
-        <p>🔗 项目完整材料：Excel原始数据+处理后数据+FineBI仪表板PNG+汇报PPT | 符合全流程要求</p>
+        <p style="margin-top: 0.3rem;">📧 项目网页基于AI大模型生成 | 数据来源微博公开话题 | 报告文件长期有效 (GitHub Pages 托管)</p>
+        <p>🔗 项目完整材料：Excel原始数据+处理后数据+FineBI仪表板截图+汇报PPT+PDF报告 | 符合全流程要求</p>
         <div style="margin-top: 12px;">
-            <small>⚡ 超链接备用：<a id="footerFinebiLink" style="color:#2c7a5e; cursor:pointer; text-decoration:underline;">FineBI 仪表板直达（无需密码）</a> — 符合作业“超级链接finebi仪表板”要求</small>
+            <small>⚡ 超链接：<a id="footerPdfLink" style="color:#2c7a5e; cursor:pointer; text-decoration:underline;">📄 仪表板报告 PDF（点击查看）</a> — 符合作业“超级链接finebi仪表板”要求（以PDF报告替代内网仪表板）</small>
         </div>
     </footer>
 </div>
 
 <script>
-    // 使用用户提供的无需密码的FineBI链接
-    const FINEBI_URL = "http://192.168.31.130:37799/webroot/decision/link/IRmW";
-    function openDashboard() {
-        window.open(FINEBI_URL, "_blank");
+    // PDF 文件名（请确保与仓库中的实际文件名完全一致）
+    const PDF_FILE_NAME = "4班-9组-仪表板.pdf";
+    
+    function openPdf() {
+        window.open(PDF_FILE_NAME, "_blank");
     }
-    document.getElementById('finebiDashboardBtn')?.addEventListener('click', (e) => { e.preventDefault(); openDashboard(); });
-    document.getElementById('footerFinebiLink')?.addEventListener('click', (e) => { e.preventDefault(); openDashboard(); });
+    
+    document.getElementById('pdfReportBtn')?.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        openPdf(); 
+    });
+    document.getElementById('footerPdfLink')?.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        openPdf(); 
+    });
 </script>
 </body>
 </html>
